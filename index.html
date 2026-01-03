@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Image Upload</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <h2>Upload Image</h2>
+  <input type="file" id="photo">
+  <button onclick="upload()">Upload</button>
+  <div id="result"></div>
+
+<script>
+const BACKEND = "https://photourlgeneratorbackend.onrender.com";
+
+async function upload(){
+  const file = document.getElementById("photo").files[0];
+  if(!file) return alert("Select a file first");
+  const form = new FormData();
+  form.append("photo", file);
+
+  const res = await fetch(BACKEND + "/upload", { method:"POST", body:form });
+  const data = await res.json();
+
+  document.getElementById("result").innerHTML =
+    "<p><b>Image URL:</b></p>" +
+    "<a target=_blank href='"+data.url+"'>"+data.url+"</a><br>" +
+    "<img width=250 src='"+data.url+"'>";
+}
+</script>
+</body>
+</html>
