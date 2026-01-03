@@ -54,9 +54,9 @@ async function upload(){
 
   document.getElementById("result").innerHTML =
     "<p><b>Image URL:</b></p>" +
-    "<a target=_blank href='"+data.url+"'>"+data.url+"</a><br>" +
-    "<p>Filename (for delete): "+data.filename+"</p>" +
-    "<img width=250 src='"+data.url+"'>";
+    `<a target=_blank href="${data.url}">${data.url}</a><br>` +
+    "<p><b>Filename:</b> "+data.filename+"</p>" +
+    `<img width=250 src="${data.url}">`;
 }
 
 async function deleteImage(){
@@ -64,6 +64,7 @@ async function deleteImage(){
   if(!token) return alert("Login first!");
 
   const filename = document.getElementById("filename").value;
+  if(!filename) return alert("Enter filename");
 
   const res = await fetch(BACKEND + "/delete/" + filename, {
     method:"DELETE",
